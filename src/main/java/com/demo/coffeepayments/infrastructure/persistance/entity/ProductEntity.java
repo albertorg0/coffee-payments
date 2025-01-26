@@ -1,6 +1,5 @@
 package com.demo.coffeepayments.infrastructure.persistance.entity;
 
-import com.demo.coffeepayments.core.domain.Product;
 import jakarta.persistence.*;
 import java.util.Map;
 import lombok.Getter;
@@ -18,11 +17,5 @@ public class ProductEntity {
 
   private String name;
 
-  @ElementCollection
-//  @Convert(converter = MapToStringConverter.class)
-  Map<String, Double> prices;
-
-  public Product toDomain() {
-    return new Product(name, prices);
-  }
+  @ElementCollection Map<String, Double> prices;
 }
