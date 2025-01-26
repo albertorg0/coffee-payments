@@ -38,7 +38,7 @@ class OrderJpaRepositoryAdapterTest {
 
     assertEquals(1, orders.size());
     assertEquals("John", orders.get(0).user());
-    assertEquals("Coffee", orders.get(0).drink());
+    assertEquals("Coffee", orders.get(0).product());
     assertEquals("Large", orders.get(0).size());
   }
 

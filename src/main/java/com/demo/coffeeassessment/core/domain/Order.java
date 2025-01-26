@@ -1,3 +1,5 @@
 package com.demo.coffeeassessment.core.domain;
 
-public record Order(String user, String drink, String size) {}
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record Order(String user, @JsonProperty("drink") String product, String size) {}

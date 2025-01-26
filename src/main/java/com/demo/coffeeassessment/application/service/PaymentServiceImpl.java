@@ -48,7 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
     // Calculate total order amount per user
     for (Order order : orders) {
       double price =
-          productRepositoryAdapter.findPriceByProductAndSize(order.drink(), order.size());
+          productRepositoryAdapter.findPriceByProductAndSize(order.product(), order.size());
       totalOrderAmountPerUser.merge(order.user(), price, Double::sum);
     }
 
