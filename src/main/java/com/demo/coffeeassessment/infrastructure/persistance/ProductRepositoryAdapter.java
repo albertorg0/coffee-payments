@@ -21,8 +21,8 @@ public class ProductRepositoryAdapter implements ProductRepository {
   }
 
   @Override
-  public List<Product> findAll() {
-    return productJpaRepository.findAll().stream().map(ProductEntity::toDomain).toList();
+  public Double findPriceByProductAndSize(String product, String size) {
+    return productJpaRepository.findPriceByProductAndSize(product, size);
   }
 
   @Override

@@ -19,7 +19,8 @@ public class ProductEntity {
 
   private String name;
 
-  @Convert(converter = MapToStringConverter.class)
+  @ElementCollection
+//  @Convert(converter = MapToStringConverter.class)
   Map<String, Double> prices;
 
   public Product toDomain() {

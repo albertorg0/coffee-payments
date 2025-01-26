@@ -1,3 +1,3 @@
 package com.demo.coffeeassessment.core.domain;
 
-public record Payment(String user, int amount) {}
+public record Payment(String user, double amount) {}
