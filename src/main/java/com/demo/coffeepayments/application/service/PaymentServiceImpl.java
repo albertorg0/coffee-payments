@@ -9,6 +9,8 @@ import com.demo.coffeepayments.infrastructure.persistance.ProductRepositoryAdapt
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +19,7 @@ public class PaymentServiceImpl implements PaymentService {
   private final PaymentRepositoryAdapter paymentRepositoryAdapter;
   private final OrderRepositoryAdapter orderRepositoryAdapter;
   private final ProductRepositoryAdapter productRepositoryAdapter;
+  private final AtomicReference<List<Payment>> paymentCache = new AtomicReference<>();
 
   public PaymentServiceImpl(
       PaymentRepositoryAdapter paymentRepositoryAdapter,
@@ -27,9 +30,16 @@ public class PaymentServiceImpl implements PaymentService {
     this.productRepositoryAdapter = productRepositoryAdapter;
   }
 
+  private List<Payment> getCachedPayments() {
+    if (paymentCache.get() == null) {
+      paymentCache.set(paymentRepositoryAdapter.findAll());
+    }
+    return paymentCache.get();
+  }
+
   @Override
   public Map<String, Double> getAmountPaidPerUser() {
-    List<Payment> payments = paymentRepositoryAdapter.findAll();
+    List<Payment> payments = getCachedPayments();
     Map<String, Double> amountPaidPerUser = new HashMap<>();
     for (Payment payment : payments) {
       amountPaidPerUser.merge(payment.user(), payment.amount(), Double::sum);
@@ -40,7 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
   @Override
   public Map<String, Double> getAmountOwedPerUser() {
     List<Order> orders = orderRepositoryAdapter.findAll();
-    List<Payment> payments = paymentRepositoryAdapter.findAll();
+    List<Payment> payments = getCachedPayments();
     Map<String, Double> totalOrderAmountPerUser = new HashMap<>();
     Map<String, Double> amountPaidPerUser = new HashMap<>();
     Map<String, Double> amountOwedPerUser = new HashMap<>();
