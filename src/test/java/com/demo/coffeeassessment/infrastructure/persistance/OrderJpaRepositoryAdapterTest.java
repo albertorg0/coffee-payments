@@ -26,7 +26,8 @@ class OrderJpaRepositoryAdapterTest {
   }
 
   @Test
-  void testFindAll() {
+  void whenFindAll_ShouldReturnOrderList() {
+    // Given
     OrderEntity orderEntity = new OrderEntity();
     orderEntity.setId(1L);
     orderEntity.setUser("John");
@@ -34,7 +35,11 @@ class OrderJpaRepositoryAdapterTest {
     orderEntity.setSize("Large");
     when(orderJpaRepository.findAll()).thenReturn(List.of(orderEntity));
 
+    // When
     List<Order> orders = orderRepositoryAdapter.findAll();
+
+    // Then
+    verify(orderJpaRepository, times(1)).findAll();
 
     assertEquals(1, orders.size());
     assertEquals("John", orders.get(0).user());
@@ -43,11 +48,14 @@ class OrderJpaRepositoryAdapterTest {
   }
 
   @Test
-  void testSaveAll() {
+  void whenSaveAll_ShouldCallRepositorySave() {
+    // Given
     Order order = new Order("John", "Coffee", "Large");
 
+    // When
     orderRepositoryAdapter.saveAll(List.of(order));
 
+    // Then
     verify(orderJpaRepository, times(1)).saveAll(anyList());
   }
 }

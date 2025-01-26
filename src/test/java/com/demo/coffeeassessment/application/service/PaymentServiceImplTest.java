@@ -27,21 +27,25 @@ class PaymentServiceImplTest {
   @InjectMocks private PaymentServiceImpl paymentService;
 
   @Test
-  void testGetAmountPaidPerUser() {
+  void whenGetAmountPaidPerUser_ShouldReturnMap() {
+    // Given
     List<Payment> payments =
         Arrays.asList(
             new Payment("user1", 50.0), new Payment("user2", 30.0), new Payment("user1", 20.0));
 
     when(paymentRepositoryAdapter.findAll()).thenReturn(payments);
 
+    // When
     Map<String, Double> result = paymentService.getAmountPaidPerUser();
 
+    // Then
     assertEquals(70.0, result.get("user1"));
     assertEquals(30.0, result.get("user2"));
   }
 
   @Test
-  void testGetAmountOwedPerUser() {
+  void whenGetAmountOwedPerUser_ShouldReturnMap() {
+    // Given
     List<Order> orders =
         Arrays.asList(
             new Order("user1", "coffee", "large"),
@@ -56,8 +60,10 @@ class PaymentServiceImplTest {
     when(productRepositoryAdapter.findPriceByProductAndSize("tea", "medium")).thenReturn(20.0);
     when(productRepositoryAdapter.findPriceByProductAndSize("coffee", "small")).thenReturn(10.0);
 
+    // When
     Map<String, Double> result = paymentService.getAmountOwedPerUser();
 
+    // Then
     assertEquals(0.0, result.get("user1"));
     assertEquals(-10.0, result.get("user2"));
   }

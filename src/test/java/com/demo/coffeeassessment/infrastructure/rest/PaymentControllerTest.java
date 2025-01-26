@@ -32,7 +32,7 @@ public class PaymentControllerTest {
   }
 
   @Test
-  public void testGetAmountPaidPerUser() throws Exception {
+  public void whenGetAmountPaidPerUser_ShouldReturnOkResponse() throws Exception {
     Map<String, Double> amountPaidPerUser = new HashMap<>();
     amountPaidPerUser.put("user1", 70.0);
     amountPaidPerUser.put("user2", 30.0);
@@ -50,7 +50,7 @@ public class PaymentControllerTest {
   }
 
   @Test
-  public void testGetAmountOwedPerUser() throws Exception {
+  public void whenGetAmountOwedPerUser_ShouldReturnOkResponse() throws Exception {
     Map<String, Double> amountOwedPerUser = new HashMap<>();
     amountOwedPerUser.put("user1", 0.0);
     amountOwedPerUser.put("user2", -10.0);

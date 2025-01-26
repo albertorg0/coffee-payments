@@ -26,15 +26,18 @@ class PaymentJpaRepositoryAdapterTest {
   }
 
   @Test
-  void testFindAll() {
+  void whenFindAll_ShouldReturnPaymentList() {
+    // Given
     PaymentEntity paymentEntity = new PaymentEntity();
     paymentEntity.setId(1L);
     paymentEntity.setUser("John");
     paymentEntity.setAmount(100);
     when(paymentJpaRepository.findAll()).thenReturn(List.of(paymentEntity));
 
+    // When
     List<Payment> payments = paymentRepositoryAdapter.findAll();
 
+    // Then
     verify(paymentJpaRepository, times(1)).findAll();
 
     assertEquals(1, payments.size());
@@ -43,11 +46,14 @@ class PaymentJpaRepositoryAdapterTest {
   }
 
   @Test
-  void testSaveAll() {
+  void whenSaveAll_ShouldCallRepositorySave() {
+    // Given
     Payment payment = new Payment("John", 100);
 
+    // When
     paymentRepositoryAdapter.saveAll(List.of(payment));
 
+    // Then
     verify(paymentJpaRepository, times(1)).saveAll(anyList());
   }
 }

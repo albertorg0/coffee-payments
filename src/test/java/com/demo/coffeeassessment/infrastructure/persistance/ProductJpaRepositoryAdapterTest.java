@@ -26,20 +26,28 @@ class ProductJpaRepositoryAdapterTest {
   }
 
   @Test
-  void testFindAll() {
+  void whenFindPriceByProductAndSize_ShouldReturnDouble() {
+    // Given
     when(productJpaRepository.findPriceByProductAndSize("Coffee", "small")).thenReturn(5.0);
 
+    // When
     Double result = productRepositoryAdapter.findPriceByProductAndSize("Coffee", "small");
+
+    // Then
+    verify(productJpaRepository, times(1)).findPriceByProductAndSize("Coffee", "small");
 
     assertEquals(5.0, result);
   }
 
   @Test
-  void testSaveAll() {
+  void whenSaveAll_ShouldCallRepositorySave() {
+    // Given
     Product product = new Product("Coffee", Map.of("small", 5.0));
 
+    // When
     productRepositoryAdapter.saveAll(List.of(product));
 
+    // Then
     verify(productJpaRepository, times(1)).saveAll(anyList());
   }
 }

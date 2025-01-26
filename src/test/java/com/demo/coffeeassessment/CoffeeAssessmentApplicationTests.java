@@ -20,7 +20,7 @@ class CoffeeAssessmentApplicationTests {
   void contextLoads() {}
 
   @Test
-  void testGetAmountPaidPerUser() throws Exception {
+  void whenGetAmountPaidPerUser_ShouldReturnUserAmountList() throws Exception {
     mockMvc
         .perform(get("/payments/amount-paid"))
         .andExpect(status().isOk())
@@ -29,7 +29,7 @@ class CoffeeAssessmentApplicationTests {
   }
 
   @Test
-  void testGetAmountOwedPerUser() throws Exception {
+  void whenGetAmountOwedPerUser_ShouldReturnUserAmountList() throws Exception {
     mockMvc
         .perform(get("/payments/amount-owed"))
         .andExpect(status().isOk())
