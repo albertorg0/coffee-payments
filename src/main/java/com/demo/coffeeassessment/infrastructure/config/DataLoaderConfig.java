@@ -3,25 +3,32 @@ package com.demo.coffeeassessment.infrastructure.config;
 import com.demo.coffeeassessment.core.domain.Order;
 import com.demo.coffeeassessment.core.domain.Payment;
 import com.demo.coffeeassessment.core.domain.Product;
-import com.demo.coffeeassessment.core.port.outbound.OrderRepository;
-import com.demo.coffeeassessment.core.port.outbound.PaymentRepository;
-import com.demo.coffeeassessment.core.port.outbound.ProductRepository;
+import com.demo.coffeeassessment.core.port.OrderRepository;
+import com.demo.coffeeassessment.core.port.PaymentRepository;
+import com.demo.coffeeassessment.core.port.ProductRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DataLoaderConfig {
 
-  @Autowired private OrderRepository orderRepository;
-  @Autowired private PaymentRepository paymentRepository;
-  @Autowired private ProductRepository productRepository;
+  private final OrderRepository orderRepository;
+  private final PaymentRepository paymentRepository;
+  private final ProductRepository productRepository;
+
+  public DataLoaderConfig(
+      OrderRepository orderRepository,
+      PaymentRepository paymentRepository,
+      ProductRepository productRepository) {
+    this.orderRepository = orderRepository;
+    this.paymentRepository = paymentRepository;
+    this.productRepository = productRepository;
+  }
 
   @PostConstruct
   public void init() throws IOException {

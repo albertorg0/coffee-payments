@@ -1,4 +1,4 @@
-package com.demo.coffeeassessment.core.port.outbound;
+package com.demo.coffeeassessment.core.port;
 
 import com.demo.coffeeassessment.core.domain.Product;
 import java.util.List;
